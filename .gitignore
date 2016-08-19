@@ -23,6 +23,8 @@ buildNumber.properties
 .idea/dictionaries
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
+.idea/copyright
+.idea/inspectionProfiles
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids
@@ -31,6 +33,7 @@ buildNumber.properties
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
+.idea/compiler.xml
 
 # Gradle:
 .idea/gradle.xml
@@ -62,7 +65,7 @@ fabric.properties
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
-# modules.xml
-# .idea/misc.xml 
-# *.ipr
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
