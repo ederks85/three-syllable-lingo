@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -40,19 +39,14 @@ public class ThreeSyllableLingoWordTest {
     public void test_three_syllable_lingo_word_initial_guess_status() {
         final ThreeSyllableWord threeSyllableWord = this.threeSyllableWordFactory.createRandomThreeSyllableWord();
         final ThreeSyllableLingoWord threeSyllableLingoWord = new DefaultThreeSyllableLingoWord(threeSyllableWord);
-        final Character[] initialGuessStatus = threeSyllableLingoWord.getGuessStatus();
+        final Character[] guessStatus = threeSyllableLingoWord.getGuessStatus();
 
-        assertNotNull("ThreeSyllableLingoWord InitialGuessStatus is null", initialGuessStatus);
-        assertEquals(threeSyllableWord.getCompleteWord().length(), initialGuessStatus.length);
+        assertNotNull("ThreeSyllableLingoWord GuessStatus is null", guessStatus);
+        assertEquals(threeSyllableWord.getCompleteWord().length(), guessStatus.length);
 
-        for (int i=0; i < initialGuessStatus.length; i++) {
-            if (i == 0) {
-                assertNotNull("ThreeSyllableLingoWord InitialGuessStatus first character is null", initialGuessStatus[i]);
-                assertEquals(initialGuessStatus[i], Character.valueOf(threeSyllableWord.getCompleteWord().charAt(i)));
-                System.out.print(initialGuessStatus[i]);
-            } else {
-                assertNull(initialGuessStatus[i]);
-                System.out.print(initialGuessStatus[i]);
+        for (int i=0; i < guessStatus.length; i++) {
+            if (guessStatus[i] != null) {
+                assertEquals(guessStatus[i], Character.valueOf(threeSyllableWord.getCompleteWord().charAt(i)));
             }
         }
     }
