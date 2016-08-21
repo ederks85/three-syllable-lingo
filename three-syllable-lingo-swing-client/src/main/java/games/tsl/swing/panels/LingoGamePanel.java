@@ -14,7 +14,7 @@ public class LingoGamePanel extends JPanel {
     private final JList<String> threeSyllableLingoWordsList;
 
     public LingoGamePanel(final String initialValue) {
-        this.setBackground(Color.BLUE);
+        this.setBackground(Color.WHITE);
 
         final DefaultListModel listModel = new DefaultListModel();
         listModel.addElement(initialValue);

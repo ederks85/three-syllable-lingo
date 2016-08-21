@@ -10,7 +10,7 @@ import games.tsl.swing.panels.LingoGamePanel;
 import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import java.beans.Transient;
+import java.io.IOException;
 
 /**
  * Created by Edwin on 21-8-2016.
@@ -24,7 +24,7 @@ public class ThreeSyllableLingoJFrame extends JFrame {
     // Transient because we don't want to serialize the whole engine. Code quality was complaining about this.
     private transient ThreeSyllableLingoGameEngine threeSyllableLingoGameEngine;
 
-    public ThreeSyllableLingoJFrame() throws ThreeSyllableLingoGameException {
+    public ThreeSyllableLingoJFrame() throws ThreeSyllableLingoGameException, IOException {
         this.threeSyllableLingoGameEngine = new LocalThreeSyllableLingoGameEngine();
 
         this.setLayout(new BorderLayout());
@@ -58,7 +58,7 @@ public class ThreeSyllableLingoJFrame extends JFrame {
         SwingUtilities.invokeLater(() -> {
             try {
                 new ThreeSyllableLingoJFrame();
-            } catch (ThreeSyllableLingoGameException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });

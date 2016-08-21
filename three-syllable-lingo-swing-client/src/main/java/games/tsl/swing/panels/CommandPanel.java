@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 /**
  * Created by Edwin on 21-8-2016.
@@ -18,7 +17,7 @@ public class CommandPanel extends JPanel {
     private final JButton quitButton;
 
     public CommandPanel() {
-        this.setBackground(Color.RED);
+        this.setBackground(Color.WHITE);
 
         this.inputField = new JTextField();
         this.inputField.setPreferredSize(new Dimension(400, 50));
