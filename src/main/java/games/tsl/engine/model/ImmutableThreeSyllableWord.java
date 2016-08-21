@@ -4,17 +4,17 @@ import games.tsl.engine.api.ThreeSyllableWord;
 import org.apache.commons.lang3.Validate;
 
 /**
- * Default implementation of {@link ThreeSyllableWord} that provided no internal synchronization.
+ * Immutable implementation of {@link ThreeSyllableWord} that provided no internal synchronization.
  *
  * Created by Edwin on 20-8-2016.
  */
-public class DefaultThreeSyllableWord implements ThreeSyllableWord {
+public class ImmutableThreeSyllableWord implements ThreeSyllableWord {
 
     private final String originalWord;
     private final int firstSyllableSplitLocation;
     private final int secondSyllableSplitLocation;
 
-    public DefaultThreeSyllableWord(final String originalWord, final int firstSyllableSplitLocation, final int secondSyllableSplitLocation) {
+    public ImmutableThreeSyllableWord(final String originalWord, final int firstSyllableSplitLocation, final int secondSyllableSplitLocation) {
         Validate.notBlank(originalWord, "OriginalWord is blank");
 
         if (firstSyllableSplitLocation < 0 || firstSyllableSplitLocation >= secondSyllableSplitLocation || firstSyllableSplitLocation >= originalWord.length()) {
@@ -22,7 +22,7 @@ public class DefaultThreeSyllableWord implements ThreeSyllableWord {
         }
 
         if (secondSyllableSplitLocation < 0 || secondSyllableSplitLocation <= firstSyllableSplitLocation || secondSyllableSplitLocation >= originalWord.length()) {
-            throw new IllegalArgumentException("Invalid FirstSyllableSplitLocation: " + firstSyllableSplitLocation);
+            throw new IllegalArgumentException("Invalid SecondSyllableSplitLocation: " + firstSyllableSplitLocation);
         }
 
         this.originalWord = originalWord;

@@ -3,7 +3,7 @@ package games.tsl.engine;
 import static org.junit.Assert.assertEquals;
 
 import games.tsl.engine.api.ThreeSyllableWord;
-import games.tsl.engine.model.DefaultThreeSyllableWord;
+import games.tsl.engine.model.ImmutableThreeSyllableWord;
 import org.junit.Test;
 
 /**
@@ -15,7 +15,7 @@ public class ThreeSyllableWordTest {
 
     @Test
     public void test_original_word_syllable_split() {
-        final ThreeSyllableWord threeSyllableWord = new DefaultThreeSyllableWord(ORIGINAL_WORD, 3, 5);
+        final ThreeSyllableWord threeSyllableWord = new ImmutableThreeSyllableWord(ORIGINAL_WORD, 3, 5);
 
         assertEquals(3, threeSyllableWord.getFirstSyllableSplitLocation());
         assertEquals(5, threeSyllableWord.getSecondSyllableSplitLocation());
@@ -29,36 +29,36 @@ public class ThreeSyllableWordTest {
 
     @Test(expected = NullPointerException.class)
     public void test_null_original_word() {
-        new DefaultThreeSyllableWord(null, 0, 0);
+        new ImmutableThreeSyllableWord(null, 0, 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void test_invalid_first_syllable_split_location_smaller_than_zero() {
-        new DefaultThreeSyllableWord(ORIGINAL_WORD, -1, 5);
+        new ImmutableThreeSyllableWord(ORIGINAL_WORD, -1, 5);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void test_invalid_first_syllable_split_location_greater_than_second_split_location() {
-        new DefaultThreeSyllableWord(ORIGINAL_WORD, 6, 5);
+        new ImmutableThreeSyllableWord(ORIGINAL_WORD, 6, 5);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void test_invalid_first_syllable_split_location_greater_than_word_length() {
-        new DefaultThreeSyllableWord(ORIGINAL_WORD, 9, 5);
+        new ImmutableThreeSyllableWord(ORIGINAL_WORD, 9, 5);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void test_invalid_second_syllable_split_location_smaller_than_zero() {
-        new DefaultThreeSyllableWord(ORIGINAL_WORD, 3, -1);
+        new ImmutableThreeSyllableWord(ORIGINAL_WORD, 3, -1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void test_invalid_second_syllable_split_location_smaller_than_first_split_location() {
-        new DefaultThreeSyllableWord(ORIGINAL_WORD, 3, 1);
+        new ImmutableThreeSyllableWord(ORIGINAL_WORD, 3, 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void test_invalid_second_syllable_split_location_greater_than_word_length() {
-        new DefaultThreeSyllableWord(ORIGINAL_WORD, 3, 9);
+        new ImmutableThreeSyllableWord(ORIGINAL_WORD, 3, 9);
     }
 }

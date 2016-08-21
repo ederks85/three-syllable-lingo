@@ -10,7 +10,6 @@ import org.apache.commons.lang3.Validate;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Random;
 
@@ -60,7 +59,7 @@ public class CSVThreeSyllableWordFactory implements ThreeSyllableWordFactory {
 
         final CSVRecord csvRecord = this.threeSyllableWordsCollection.get(randomNumber);
 
-        return new DefaultThreeSyllableWord(
+        return new ImmutableThreeSyllableWord(
                 csvRecord.get(CSVThreeSyllableWordFactoryHeaders.WORD_NAME),
                 Integer.parseInt(csvRecord.get(CSVThreeSyllableWordFactoryHeaders.FIRST_SYLLABLE_SPLIT_LOCATION)),
                 Integer.parseInt(csvRecord.get(CSVThreeSyllableWordFactoryHeaders.SECOND_SYLLABLE_SPLIT_LOCATION))
