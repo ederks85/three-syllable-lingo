@@ -7,24 +7,18 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>three-syllable-lingo-engine</artifactId>
+	<artifactId>three-syllable-lingo-swing-client</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-csv</artifactId>
+			<groupId>games.three-syllable-lingo</groupId>
+			<artifactId>three-syllable-lingo-engine</artifactId>
 		</dependency>
 
-		<!-- Test -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
 	</dependencies>
 </project>

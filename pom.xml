@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>games</groupId>
+	<groupId>games.three-syllable-lingo</groupId>
 	<artifactId>three-syllable-lingo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
@@ -12,6 +12,7 @@
 
 	<modules>
 		<module>three-syllable-lingo-engine</module>
+		<module>three-syllable-lingo-swing-client</module>
 	</modules>
 
 	<build>
@@ -103,6 +104,12 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>games.three-syllable-lingo</groupId>
+				<artifactId>three-syllable-lingo-engine</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>

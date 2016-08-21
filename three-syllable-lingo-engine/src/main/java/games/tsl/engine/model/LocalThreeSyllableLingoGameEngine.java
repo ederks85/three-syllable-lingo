@@ -6,6 +6,7 @@ import games.tsl.engine.api.ThreeSyllableWordFactory;
 import games.tsl.engine.api.exception.ThreeSyllableLingoGameException;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Implementation of {@link ThreeSyllableLingoGameEngine} that manages the game completely in a local VM.
