@@ -83,8 +83,8 @@
 						<id>validate</id>
 						<phase>validate</phase>
 						<configuration>
-							<configLocation>quality\checkstyle.xml</configLocation>
-							<suppressionsLocation>quality\checkstyle-suppressions.xml</suppressionsLocation>
+							<configLocation>/quality/checkstyle.xml</configLocation>
+							<suppressionsLocation>/quality/checkstyle-suppressions.xml</suppressionsLocation>
 							<encoding>UTF-8</encoding>
 							<consoleOutput>true</consoleOutput>
 							<failsOnError>true</failsOnError>
