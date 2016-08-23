@@ -1,6 +1,8 @@
 package games.tsl.swing;
 
 import games.tsl.engine.api.ThreeSyllableLingoGameEngine;
+import games.tsl.engine.api.ThreeSyllableLingoWordCharacter;
+import games.tsl.engine.api.ThreeSyllableLingoWordCharacterGuessStatus;
 import games.tsl.engine.api.exception.ThreeSyllableLingoGameException;
 import games.tsl.engine.model.LocalThreeSyllableLingoGameEngine;
 import games.tsl.swing.panels.BannerPanel;
@@ -33,13 +35,13 @@ public class ThreeSyllableLingoJFrame extends JFrame {
         this.add(this.bannerPanel, BorderLayout.NORTH);
 
         //TODO In the future, convert input from engine nicely to Lingo model in LingoGamePanel
-        final Character[] initialThreeSyllableWord = this.threeSyllableLingoGameEngine.startNewGame();
+        final ThreeSyllableLingoWordCharacter[] initialThreeSyllableWord = this.threeSyllableLingoGameEngine.startNewGame();
         StringBuilder convertedValue = new StringBuilder();
-        for (Character character : initialThreeSyllableWord) {
-            if (character == null) {
-                convertedValue.append(". ");
+        for (ThreeSyllableLingoWordCharacter threeSyllableLingoWordCharacter : initialThreeSyllableWord) {
+            if (threeSyllableLingoWordCharacter.getStatus() == ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE) {
+                convertedValue.append(String.valueOf(threeSyllableLingoWordCharacter.getCharacter()) + " ");
             } else {
-                convertedValue.append(String.valueOf(character) + " ");
+                convertedValue.append(". ");
             }
         }
 

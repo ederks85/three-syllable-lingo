@@ -1,6 +1,7 @@
 package games.tsl.engine;
 
 import games.tsl.engine.api.ThreeSyllableLingoWord;
+import games.tsl.engine.api.ThreeSyllableLingoWordCharacter;
 import games.tsl.engine.api.ThreeSyllableWord;
 import games.tsl.engine.api.ThreeSyllableWordFactory;
 import games.tsl.engine.model.CSVThreeSyllableWordFactory;
@@ -39,14 +40,14 @@ public class ThreeSyllableLingoWordTest {
     public void test_three_syllable_lingo_word_initial_guess_status() {
         final ThreeSyllableWord threeSyllableWord = this.threeSyllableWordFactory.createRandomThreeSyllableWord();
         final ThreeSyllableLingoWord threeSyllableLingoWord = new DefaultThreeSyllableLingoWord(threeSyllableWord);
-        final Character[] guessStatus = threeSyllableLingoWord.getGuessStatus();
+        final ThreeSyllableLingoWordCharacter[] guessStatus = threeSyllableLingoWord.getGuessStatus();
 
         assertNotNull("ThreeSyllableLingoWord GuessStatus is null", guessStatus);
         assertEquals(threeSyllableWord.getCompleteWord().length(), guessStatus.length);
 
         for (int i=0; i < guessStatus.length; i++) {
             if (guessStatus[i] != null) {
-                assertEquals(guessStatus[i], Character.valueOf(threeSyllableWord.getCompleteWord().charAt(i)));
+                assertEquals(guessStatus[i].getCharacter(), threeSyllableWord.getCompleteWord().charAt(i));
             }
         }
     }

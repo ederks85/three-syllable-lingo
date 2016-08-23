@@ -13,5 +13,5 @@ public interface ThreeSyllableLingoGameEngine {
      *
      * @return The initial state of a three-syllable word to play the game with. Never null.
      */
-    Character[] startNewGame();
+    ThreeSyllableLingoWordCharacter[] startNewGame();
 }

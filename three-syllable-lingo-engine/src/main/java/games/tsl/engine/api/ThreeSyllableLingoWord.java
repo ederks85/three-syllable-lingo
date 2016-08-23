@@ -3,6 +3,8 @@ package games.tsl.engine.api;
 /**
  * Interface that defines the operations that can be performed on a three-syllable word that is being used in a Lingo game.
  *
+ * @see {@link ThreeSyllableLingoWordCharacter}
+ *
  * Created by Edwin on 21-8-2016.
  */
 public interface ThreeSyllableLingoWord {
@@ -12,7 +14,7 @@ public interface ThreeSyllableLingoWord {
      * word to be guessed. Array positions containing a {@link Character} represent correctly guessed locations where null
      * positions represent unguessed positions.
      *
-     * @return A {@link Character[]} representing the status, never null.
+     * @return A {@link ThreeSyllableLingoWordCharacter[]} representing the status of every single character in the word, never null.
      */
-    Character[] getGuessStatus();
+    ThreeSyllableLingoWordCharacter[] getGuessStatus();
 }

@@ -1,6 +1,8 @@
 package games.tsl.engine.model;
 
 import games.tsl.engine.api.ThreeSyllableLingoWord;
+import games.tsl.engine.api.ThreeSyllableLingoWordCharacter;
+import games.tsl.engine.api.ThreeSyllableLingoWordCharacterGuessStatus;
 import games.tsl.engine.api.ThreeSyllableWord;
 import org.apache.commons.lang3.Validate;
 
@@ -20,11 +22,20 @@ public class DefaultThreeSyllableLingoWord implements ThreeSyllableLingoWord {
     }
 
     @Override
-    public Character[] getGuessStatus() {
+    public ThreeSyllableLingoWordCharacter[] getGuessStatus() {
         final String completeThreeSyllableWordAsString = this.threeSyllableWord.getCompleteWord();
-        final Character[] guessStatus = new Character[completeThreeSyllableWordAsString.length()];
+        final ThreeSyllableLingoWordCharacter[] guessStatus = new ThreeSyllableLingoWordCharacter[completeThreeSyllableWordAsString.length()];
 
-        guessStatus[0] = completeThreeSyllableWordAsString.charAt(0);
+        for (int i=0; i < completeThreeSyllableWordAsString.length(); i++) {
+            final ThreeSyllableLingoWordCharacterGuessStatus status;
+            if (i == 0) {
+                status = ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE;
+            } else {
+                status = ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN;
+            }
+            guessStatus[i] = new ImmutableThreeSyllableLingoWordCharacter(status, completeThreeSyllableWordAsString.charAt(i));
+
+        }
 
         return guessStatus;
     }

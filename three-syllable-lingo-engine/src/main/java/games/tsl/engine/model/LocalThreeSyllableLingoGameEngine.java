@@ -2,6 +2,7 @@ package games.tsl.engine.model;
 
 import games.tsl.engine.api.ThreeSyllableLingoGameEngine;
 import games.tsl.engine.api.ThreeSyllableLingoWord;
+import games.tsl.engine.api.ThreeSyllableLingoWordCharacter;
 import games.tsl.engine.api.ThreeSyllableWordFactory;
 import games.tsl.engine.api.exception.ThreeSyllableLingoGameException;
 
@@ -33,7 +34,7 @@ public class LocalThreeSyllableLingoGameEngine implements ThreeSyllableLingoGame
     }
 
     @Override
-    public Character[] startNewGame() {
+    public ThreeSyllableLingoWordCharacter[] startNewGame() {
         return this.threeSyllableLingoWord.getGuessStatus();
     }
 }
