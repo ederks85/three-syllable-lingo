@@ -34,18 +34,8 @@ public class ThreeSyllableLingoJFrame extends JFrame {
         this.bannerPanel = new BannerPanel();
         this.add(this.bannerPanel, BorderLayout.NORTH);
 
-        //TODO In the future, convert input from engine nicely to Lingo model in LingoGamePanel
         final ThreeSyllableLingoWordCharacter[] initialThreeSyllableWord = this.threeSyllableLingoGameEngine.startNewGame();
-        StringBuilder convertedValue = new StringBuilder();
-        for (ThreeSyllableLingoWordCharacter threeSyllableLingoWordCharacter : initialThreeSyllableWord) {
-            if (threeSyllableLingoWordCharacter.getStatus() == ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE) {
-                convertedValue.append(String.valueOf(threeSyllableLingoWordCharacter.getCharacter()) + " ");
-            } else {
-                convertedValue.append(". ");
-            }
-        }
-
-        this.lingoGamePanel = new LingoGamePanel(convertedValue.toString());
+        this.lingoGamePanel = new LingoGamePanel(initialThreeSyllableWord);
         this.add(this.lingoGamePanel, BorderLayout.CENTER);
 
         this.commandPanel = new CommandPanel();
