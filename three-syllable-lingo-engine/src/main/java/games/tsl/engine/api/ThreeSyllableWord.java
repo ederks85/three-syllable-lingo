@@ -30,6 +30,11 @@ public interface ThreeSyllableWord {
     String getCompleteWord();
 
     /**
+     * @return The first character of the exact word that is being wrapped. Never null.
+     */
+    char getFirstCharacter();
+
+    /**
      * The first syllable of the wrapped word, based on the first split location.
      *
      * @return The first syllable of the word. Never null.

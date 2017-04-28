@@ -1,22 +1,17 @@
 package games.tsl.swing;
 
+import games.tsl.engine.LocalThreeSyllableLingoGameEngine;
 import games.tsl.engine.api.ThreeSyllableLingoGameEngine;
 import games.tsl.engine.api.ThreeSyllableLingoWordCharacter;
-import games.tsl.engine.api.ThreeSyllableLingoWordCharacterGuessStatus;
 import games.tsl.engine.api.exception.ThreeSyllableLingoGameException;
-import games.tsl.engine.model.LocalThreeSyllableLingoGameEngine;
 import games.tsl.swing.panels.BannerPanel;
 import games.tsl.swing.panels.CommandPanel;
 import games.tsl.swing.panels.LingoGamePanel;
 
-import javax.swing.SwingUtilities;
-import javax.swing.JFrame;
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 
-/**
- * Created by Edwin on 21-8-2016.
- */
 public class ThreeSyllableLingoJFrame extends JFrame {
 
     private BannerPanel bannerPanel;
@@ -26,7 +21,7 @@ public class ThreeSyllableLingoJFrame extends JFrame {
     // Transient because we don't want to serialize the whole engine. Code quality was complaining about this.
     private transient ThreeSyllableLingoGameEngine threeSyllableLingoGameEngine;
 
-    public ThreeSyllableLingoJFrame() throws ThreeSyllableLingoGameException, IOException {
+    private ThreeSyllableLingoJFrame() throws ThreeSyllableLingoGameException, IOException {
         this.threeSyllableLingoGameEngine = new LocalThreeSyllableLingoGameEngine();
 
         this.setLayout(new BorderLayout());

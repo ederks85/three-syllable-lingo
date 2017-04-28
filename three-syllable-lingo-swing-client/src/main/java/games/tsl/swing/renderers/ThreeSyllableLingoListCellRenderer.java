@@ -3,9 +3,8 @@ package games.tsl.swing.renderers;
 import games.tsl.engine.api.ThreeSyllableLingoWordCharacter;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 import java.awt.*;
+import java.util.Locale;
 
 /**
  * Renderer for the list that displays the word guesses in a three-syllable-lingo game.
@@ -46,6 +45,9 @@ public class ThreeSyllableLingoListCellRenderer extends JPanel implements ListCe
             for (ThreeSyllableLingoWordCharacter tslwc : tslwcs) {
                 final JLabel characterLabel = new JLabel();
 
+                final Font labelFont = characterLabel.getFont();
+                characterLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 40));
+
                 characterLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 
                 characterLabel.setMinimumSize(new Dimension(60, 60));
@@ -59,7 +61,7 @@ public class ThreeSyllableLingoListCellRenderer extends JPanel implements ListCe
 
                 switch (tslwc.getStatus()) {
                     case IN_PLACE: {
-                        characterLabel.setText(String.valueOf(tslwc.getCharacter()));
+                        characterLabel.setText(String.valueOf(tslwc.getCharacter()).toUpperCase(Locale.ROOT));
                         characterLabel.setForeground(Color.WHITE);
                         characterLabel.setBackground(Color.BLUE);
                         break;

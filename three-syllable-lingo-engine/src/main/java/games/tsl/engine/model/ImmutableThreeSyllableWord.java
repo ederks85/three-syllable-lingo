@@ -15,7 +15,7 @@ public class ImmutableThreeSyllableWord implements ThreeSyllableWord {
     private final int secondSyllableSplitLocation;
 
     public ImmutableThreeSyllableWord(final String originalWord, final int firstSyllableSplitLocation, final int secondSyllableSplitLocation) {
-        Validate.notBlank(originalWord, "OriginalWord is blank");
+        Validate.notEmpty(originalWord, "OriginalWord is empty");
 
         if (firstSyllableSplitLocation < 0 || firstSyllableSplitLocation >= secondSyllableSplitLocation || firstSyllableSplitLocation >= originalWord.length()) {
             throw new IllegalArgumentException("Invalid FirstSyllableSplitLocation: " + firstSyllableSplitLocation);
@@ -43,6 +43,11 @@ public class ImmutableThreeSyllableWord implements ThreeSyllableWord {
     @Override
     public String getCompleteWord() {
         return this.originalWord;
+    }
+
+    @Override
+    public char getFirstCharacter() {
+        return this.originalWord.charAt(0);
     }
 
     @Override

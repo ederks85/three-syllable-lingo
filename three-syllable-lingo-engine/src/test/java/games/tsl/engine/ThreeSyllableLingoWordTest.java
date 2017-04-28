@@ -2,44 +2,52 @@ package games.tsl.engine;
 
 import games.tsl.engine.api.ThreeSyllableLingoWord;
 import games.tsl.engine.api.ThreeSyllableLingoWordCharacter;
+import games.tsl.engine.api.ThreeSyllableLingoWordCharacterGuessStatus;
 import games.tsl.engine.api.ThreeSyllableWord;
 import games.tsl.engine.api.ThreeSyllableWordFactory;
+import games.tsl.engine.api.exception.ThreeSyllableLingoInvalidGuessException;
 import games.tsl.engine.model.CSVThreeSyllableWordFactory;
-import games.tsl.engine.model.DefaultThreeSyllableLingoWord;
+import games.tsl.engine.model.ImmutableThreeSyllableWord;
+import games.tsl.engine.model.ThreadSafeThreeSyllableLingoWord;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
-/**
- * Created by Edwin on 21-8-2016.
- */
+@RunWith(MockitoJUnitRunner.class)
 public class ThreeSyllableLingoWordTest {
 
+    private final String GENERATED_THREE_SYLLABLE_WORD = "syllable";
+    private final String VALID_GUESS_INPUT = "sollatom";
+    private final String INVALID_GUESS_INPUT = "invalidsyllable";
+
+    @Mock
     private ThreeSyllableWordFactory threeSyllableWordFactory;
+
+    private ThreeSyllableWord threeSyllableWord;
+
+    private ThreeSyllableLingoWord threeSyllableLingoWord;
 
     @Before
     public void init() throws IOException {
-        this.threeSyllableWordFactory = new CSVThreeSyllableWordFactory();
-    }
+        when(this.threeSyllableWordFactory.createRandomThreeSyllableWord()).thenReturn(new ImmutableThreeSyllableWord(GENERATED_THREE_SYLLABLE_WORD, 3, 5));
 
-    @Test(expected = NullPointerException.class)
-    public void test_three_syllable_lingo_word_input_null() {
-        final ThreeSyllableLingoWord threeSyllableLingoWord = new DefaultThreeSyllableLingoWord(null);
-    }
-
-    @Test
-    public void test_three_syllable_lingo_word_input_valid() {
-        final ThreeSyllableWord threeSyllableWord = this.threeSyllableWordFactory.createRandomThreeSyllableWord();
-        final ThreeSyllableLingoWord threeSyllableLingoWord = new DefaultThreeSyllableLingoWord(threeSyllableWord);
+        this.threeSyllableWord = this.threeSyllableWordFactory.createRandomThreeSyllableWord();
+        this.threeSyllableLingoWord = new ThreadSafeThreeSyllableLingoWord(threeSyllableWord);
     }
 
     @Test
     public void test_three_syllable_lingo_word_initial_guess_status() {
-        final ThreeSyllableWord threeSyllableWord = this.threeSyllableWordFactory.createRandomThreeSyllableWord();
-        final ThreeSyllableLingoWord threeSyllableLingoWord = new DefaultThreeSyllableLingoWord(threeSyllableWord);
         final ThreeSyllableLingoWordCharacter[] guessStatus = threeSyllableLingoWord.getGuessStatus();
 
         assertNotNull("ThreeSyllableLingoWord GuessStatus is null", guessStatus);
@@ -50,5 +58,45 @@ public class ThreeSyllableLingoWordTest {
                 assertEquals(guessStatus[i].getCharacter(), threeSyllableWord.getCompleteWord().charAt(i));
             }
         }
+    }
+
+    @Test
+    public void test_three_syllable_lingo_word_guess_status_after_proper_guess() throws ThreeSyllableLingoInvalidGuessException {
+        this.threeSyllableLingoWord.guess(VALID_GUESS_INPUT);
+        final ThreeSyllableLingoWordCharacter[] mostRecentGuessStatus = this.threeSyllableLingoWord.getGuessStatus();
+
+        assertNotNull(mostRecentGuessStatus);
+        assertEquals(mostRecentGuessStatus.length, this.threeSyllableWord.getCompleteWord().length());
+
+        // syllable
+        // sollatom
+        assertEquals(ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE, mostRecentGuessStatus[0].getStatus());
+        assertEquals(VALID_GUESS_INPUT.charAt(0), mostRecentGuessStatus[0].getCharacter());
+
+        assertEquals(ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN, mostRecentGuessStatus[1].getStatus());
+        assertNotEquals(VALID_GUESS_INPUT.charAt(1), mostRecentGuessStatus[1].getCharacter());
+
+        assertEquals(ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE, mostRecentGuessStatus[2].getStatus());
+        assertEquals(VALID_GUESS_INPUT.charAt(2), mostRecentGuessStatus[2].getCharacter());
+
+        assertEquals(ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE, mostRecentGuessStatus[3].getStatus());
+        assertEquals(VALID_GUESS_INPUT.charAt(3), mostRecentGuessStatus[3].getCharacter());
+
+        assertEquals(ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE, mostRecentGuessStatus[4].getStatus());
+        assertEquals(VALID_GUESS_INPUT.charAt(4), mostRecentGuessStatus[4].getCharacter());
+
+        assertEquals(ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN, mostRecentGuessStatus[5].getStatus());
+        assertNotEquals(VALID_GUESS_INPUT.charAt(5), mostRecentGuessStatus[5].getCharacter());
+
+        assertEquals(ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN, mostRecentGuessStatus[6].getStatus());
+        assertNotEquals(VALID_GUESS_INPUT.charAt(6), mostRecentGuessStatus[6].getCharacter());
+
+        assertEquals(ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN, mostRecentGuessStatus[7].getStatus());
+        assertNotEquals(VALID_GUESS_INPUT.charAt(7), mostRecentGuessStatus[7].getCharacter());
+    }
+
+    @Test(expected = ThreeSyllableLingoInvalidGuessException.class)
+    public void test_three_syllable_lingo_word_guess_status_improper_guess_word_invalid_size() throws ThreeSyllableLingoInvalidGuessException {
+        this.threeSyllableLingoWord.guess(INVALID_GUESS_INPUT);
     }
 }

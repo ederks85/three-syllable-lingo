@@ -1,30 +1,39 @@
 package games.tsl.engine;
 
-import static org.junit.Assert.assertEquals;
-
 import games.tsl.engine.api.ThreeSyllableWord;
 import games.tsl.engine.model.ImmutableThreeSyllableWord;
+import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Created by Edwin on 20-8-2016.
- */
+import static org.junit.Assert.assertEquals;
+
 public class ThreeSyllableWordTest {
 
     private static final String ORIGINAL_WORD = "Syllable";
 
+    private ThreeSyllableWord validThreeSyllableWord;
+
+    @Before
+    public void init() {
+        this.validThreeSyllableWord = new ImmutableThreeSyllableWord(ORIGINAL_WORD, 3, 5);
+    }
+
     @Test
     public void test_original_word_syllable_split() {
-        final ThreeSyllableWord threeSyllableWord = new ImmutableThreeSyllableWord(ORIGINAL_WORD, 3, 5);
+        assertEquals(3, this.validThreeSyllableWord.getFirstSyllableSplitLocation());
+        assertEquals(5, this.validThreeSyllableWord.getSecondSyllableSplitLocation());
 
-        assertEquals(3, threeSyllableWord.getFirstSyllableSplitLocation());
-        assertEquals(5, threeSyllableWord.getSecondSyllableSplitLocation());
+        assertEquals("Syl", this.validThreeSyllableWord.getFirstSyllable());
+        assertEquals("la", this.validThreeSyllableWord.getSecondSyllable());
+        assertEquals("ble", this.validThreeSyllableWord.getThirdSyllable());
 
-        assertEquals("Syl", threeSyllableWord.getFirstSyllable());
-        assertEquals("la", threeSyllableWord.getSecondSyllable());
-        assertEquals("ble", threeSyllableWord.getThirdSyllable());
+        assertEquals(ORIGINAL_WORD, this.validThreeSyllableWord.getCompleteWord());
+    }
 
-        assertEquals(ORIGINAL_WORD, threeSyllableWord.getCompleteWord());
+    @Test
+    public void test_first_character() {
+        char firstCharacter = this.validThreeSyllableWord.getFirstCharacter();
+        assertEquals(firstCharacter, this.validThreeSyllableWord.getCompleteWord().charAt(0));
     }
 
     @Test(expected = NullPointerException.class)
