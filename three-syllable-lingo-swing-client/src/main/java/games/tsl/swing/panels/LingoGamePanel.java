@@ -13,7 +13,6 @@ public class LingoGamePanel extends JPanel {
 
     public LingoGamePanel() {
         this.setBackground(Color.LIGHT_GRAY);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         this.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         this.listModel = new DefaultListModel<>();
@@ -23,19 +22,21 @@ public class LingoGamePanel extends JPanel {
         this.threeSyllableLingoWordsList.setModel(listModel);
         this.threeSyllableLingoWordsList.setCellRenderer(new ThreeSyllableLingoListCellRenderer());
 
-        this.add(this.threeSyllableLingoWordsList);
+        final Dimension listDimenson = new Dimension(800, 0);
+        this.threeSyllableLingoWordsList.setPreferredSize(listDimenson);
+        this.threeSyllableLingoWordsList.setMaximumSize(listDimenson);
+
+        this.setLayout(new GridBagLayout());
+        final GridBagConstraints gc = new GridBagConstraints();
+        gc.gridx = 0;
+        gc.gridy = 0;
+        gc.weightx = 1.0;
+        gc.weighty = 1.0;
+        gc.fill = GridBagConstraints.VERTICAL;
+        this.add(this.threeSyllableLingoWordsList, gc);
     }
 
     public void addGuessForThreeSyllableWord(final ThreeSyllableLingoWordCharacter[] guess) {
         this.listModel.addElement(guess);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        final int listHeight = (getHeight() - 20);
-
-        this.threeSyllableLingoWordsList.setPreferredSize(new Dimension(800, listHeight));
     }
 }

@@ -11,6 +11,16 @@ import games.tsl.swing.panels.LingoGamePanel;
 public interface GameComponentManager {
 
     /**
+     * Prevent any user input from being processed via the GUI.
+     */
+    void lockGUI();
+
+    /**
+     * Revert the modifications to the GUI made by {@link #lockGUI()}.
+     */
+    void unlockGUI();
+
+    /**
      * Access the game's {@link ThreeSyllableLingoGameEngine}.
      *
      * @return The {@link ThreeSyllableLingoGameEngine} being used, never null.

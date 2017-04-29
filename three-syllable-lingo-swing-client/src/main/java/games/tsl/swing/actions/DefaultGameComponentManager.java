@@ -27,6 +27,16 @@ public class DefaultGameComponentManager implements GameComponentManager, Serial
     }
 
     @Override
+    public void lockGUI() {
+        this.commandPanel.lockGUI();
+    }
+
+    @Override
+    public void unlockGUI() {
+        this.commandPanel.unlockGUI();
+    }
+
+    @Override
     public ThreeSyllableLingoGameEngine getThreeSyllableLingoGameEngine() {
         return this.threeSyllableLingoGameEngine;
     }

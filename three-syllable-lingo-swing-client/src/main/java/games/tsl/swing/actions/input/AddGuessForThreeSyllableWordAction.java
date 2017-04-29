@@ -26,7 +26,8 @@ public class AddGuessForThreeSyllableWordAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.setEnabled(false);
+        AddGuessForThreeSyllableWordAction.this.gameComponentManager.lockGUI();
+        AddGuessForThreeSyllableWordAction.this.gameComponentManager.getCommandPanel().toggleInvalidInputState(false);
 
         final SwingWorker<ThreeSyllableLingoWordCharacter[], Void> guessWorker = new SwingWorker<ThreeSyllableLingoWordCharacter[], Void>() {
             @Override
@@ -41,11 +42,12 @@ public class AddGuessForThreeSyllableWordAction extends AbstractAction {
                     final ThreeSyllableLingoWordCharacter[] guessResult = get();
                     AddGuessForThreeSyllableWordAction.this.gameComponentManager.getLingoGamePanel().addGuessForThreeSyllableWord(guessResult);
 
-                    AddGuessForThreeSyllableWordAction.this.setEnabled(true);
+                    AddGuessForThreeSyllableWordAction.this.gameComponentManager.unlockGUI();
                 } catch (InterruptedException | ExecutionException e) {
                     final Throwable rootCause = ExceptionUtils.getRootCause(e);
                     if (rootCause instanceof ThreeSyllableLingoInvalidGuessException) {
-                        AddGuessForThreeSyllableWordAction.this.setEnabled(true);
+                        AddGuessForThreeSyllableWordAction.this.gameComponentManager.unlockGUI();
+                        AddGuessForThreeSyllableWordAction.this.gameComponentManager.getCommandPanel().toggleInvalidInputState(true);
                     } else {
                         e.printStackTrace();
                     }

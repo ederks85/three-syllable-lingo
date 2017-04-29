@@ -3,6 +3,7 @@ package games.tsl.swing.panels;
 import games.tsl.swing.actions.gui.WindowCloseAction;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class CommandPanel extends JPanel {
@@ -10,9 +11,13 @@ public class CommandPanel extends JPanel {
     private static final Font FONT = new Font("Verdana", Font.BOLD, 30);
 
     private final Component leftGlue;
+    private final Component betweenInputStrut;
     private final Component betweenGlue;
 
     private final JTextField inputField;
+    private final Border inputFieldDefaultBorder;
+    private final Border inputFieldInvalidInputBorder;
+
     private final JButton inputButton;
     private final JButton quitButton;
 
@@ -24,16 +29,41 @@ public class CommandPanel extends JPanel {
         this.leftGlue = Box.createHorizontalGlue();
         this.add(leftGlue, Box.LEFT_ALIGNMENT);
 
+
         this.inputField = createInputField();
+        this.inputFieldDefaultBorder = this.inputField.getBorder();
+        this.inputFieldInvalidInputBorder = BorderFactory.createLineBorder(Color.RED, 2);
+
+        final Dimension inputFieldBounds = new Dimension(800, 50);
+        this.inputField.setPreferredSize(inputFieldBounds);
+        this.inputField.setMaximumSize(inputFieldBounds);
+
         this.add(this.inputField, Box.CENTER_ALIGNMENT);
 
+
+        this.betweenInputStrut = Box.createHorizontalStrut(5);
+        this.add(this.betweenInputStrut, Box.CENTER_ALIGNMENT);
+
+
         this.inputButton = createInputButton();
+
+        final Dimension inputButtonBounds = new Dimension(200, 50);
+        this.inputButton.setPreferredSize(inputButtonBounds);
+        this.inputButton.setMaximumSize(inputButtonBounds);
+
         this.add(this.inputButton, Box.CENTER_ALIGNMENT);
+
 
         this.betweenGlue = Box.createHorizontalGlue();
         this.add(this.betweenGlue, Box.RIGHT_ALIGNMENT);
 
+
         this.quitButton = createQuitButton();
+
+        final Dimension quitButtonBounds = new Dimension(200, 50);
+        this.quitButton.setPreferredSize(quitButtonBounds);
+        this.quitButton.setMaximumSize(quitButtonBounds);
+
         this.add(this.quitButton, Box.RIGHT_ALIGNMENT);
     }
 
@@ -45,32 +75,28 @@ public class CommandPanel extends JPanel {
         this.inputButton.setAction(action);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void lockGUI() {
+        this.inputField.setEnabled(false);
+        this.inputField.setBackground(Color.GRAY);
 
-        // Define the QuitButton's dimensions
-        final Dimension quitButtonsBounds = new Dimension(200, 50);
-        this.quitButton.setPreferredSize(quitButtonsBounds);
-        this.quitButton.setMaximumSize(quitButtonsBounds);
+        this.inputButton.setEnabled(false);
+        this.inputButton.setBackground(Color.GRAY);
+    }
 
-        // Define some calculation stuff and define the InputField dimensions with it
-        final Rectangle currentWindowBounds = SwingUtilities.getRoot(this).getBounds();
-        final int availableWidth = (Double.valueOf(currentWindowBounds.getWidth()).intValue() - 20);
-        final int quitButtonWidth = (Double.valueOf(quitButtonsBounds.getWidth()).intValue());
-        final int inputFieldWidth = (Double.valueOf(4 * quitButtonWidth)).intValue();
+    public void unlockGUI() {
+        this.inputField.setEnabled(true);
+        this.inputField.setBackground(Color.WHITE);
 
-        this.inputField.setPreferredSize(new Dimension(inputFieldWidth, 50));
-        this.inputField.setMaximumSize(new Dimension(inputFieldWidth, 50));
+        this.inputButton.setEnabled(true);
+        this.inputButton.setBackground(Color.WHITE);
+    }
 
-        // Redefine the space between the InputField and the QuitButton to center the InputField on the screen (is there a better way...?)
-        final int betweenGlueWidth = Double.valueOf((availableWidth / 2) - (inputFieldWidth / 2) - quitButtonWidth).intValue();
-        this.betweenGlue.setPreferredSize(new Dimension(betweenGlueWidth, Double.valueOf(this.betweenGlue.getPreferredSize().getHeight()).intValue()));
-        this.betweenGlue.setMaximumSize(new Dimension(betweenGlueWidth, Double.valueOf(this.betweenGlue.getMaximumSize().getHeight()).intValue()));
-
-        // Revalidate the panel
-        this.revalidate();
-        this.repaint();
+    public void toggleInvalidInputState(final boolean toggle) {
+        if (toggle) {
+            this.inputField.setBorder(this.inputFieldInvalidInputBorder);
+        } else {
+            this.inputField.setBorder(this.inputFieldDefaultBorder);
+        }
     }
 
     private JTextField createInputField() {
@@ -78,7 +104,6 @@ public class CommandPanel extends JPanel {
         textfield.setFont(FONT);
         textfield.setForeground(Color.BLUE);
         textfield.setHorizontalAlignment(JTextField.CENTER);
-        textfield.setLocation(5, 5);
         return textfield;
     }
 
