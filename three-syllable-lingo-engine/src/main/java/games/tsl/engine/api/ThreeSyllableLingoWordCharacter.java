@@ -21,7 +21,7 @@ public interface ThreeSyllableLingoWordCharacter {
      *
      * @see #getStatus()
      *
-     * @return The {@link char}, never null.
+     * @return The {@link char}.
      */
     char getCharacter();
 }

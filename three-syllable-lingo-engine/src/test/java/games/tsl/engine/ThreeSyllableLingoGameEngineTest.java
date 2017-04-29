@@ -21,7 +21,6 @@ import static org.hamcrest.core.Is.isA;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 @PrepareForTest({
@@ -44,7 +43,6 @@ public class ThreeSyllableLingoGameEngineTest {
 
     @Before
     public void init() throws Exception {
-        mockStatic(ThreeSyllableWordFactory.class);
         whenNew(CSVThreeSyllableWordFactory.class).withNoArguments().thenReturn(threeSyllableWordFactory);
         when(threeSyllableWordFactory.createRandomThreeSyllableWord()).thenReturn(new ImmutableThreeSyllableWord(GENERATED_THREE_SYLLABLE_WORD, 3, 5));
 

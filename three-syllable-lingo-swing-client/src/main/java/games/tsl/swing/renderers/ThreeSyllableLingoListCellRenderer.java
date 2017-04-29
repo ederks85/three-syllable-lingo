@@ -13,8 +13,6 @@ import java.util.Locale;
  */
 public class ThreeSyllableLingoListCellRenderer extends JPanel implements ListCellRenderer<ThreeSyllableLingoWordCharacter[]> {
 
-    private boolean rendered;
-
     public ThreeSyllableLingoListCellRenderer() {
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
@@ -28,8 +26,6 @@ public class ThreeSyllableLingoListCellRenderer extends JPanel implements ListCe
         this.setPreferredSize(new Dimension(800, 70));
         this.setMaximumSize(new Dimension(800, 70));
 
-        this.rendered = false;
-
         setOpaque(true);
     }
 
@@ -41,48 +37,47 @@ public class ThreeSyllableLingoListCellRenderer extends JPanel implements ListCe
             boolean isSelected,
             boolean cellHasFocus) {
 
-        if (!this.rendered) {
-            for (ThreeSyllableLingoWordCharacter tslwc : tslwcs) {
-                final JLabel characterLabel = new JLabel();
+        this.removeAll();
 
-                final Font labelFont = characterLabel.getFont();
-                characterLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 40));
+        for (ThreeSyllableLingoWordCharacter tslwc : tslwcs) {
+            final JLabel characterLabel = new JLabel();
 
-                characterLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+            final Font labelFont = characterLabel.getFont();
+            characterLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 40));
 
-                characterLabel.setMinimumSize(new Dimension(60, 60));
-                characterLabel.setPreferredSize(new Dimension(60, 60));
-                characterLabel.setMaximumSize(new Dimension(60, 60));
+            characterLabel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 
-                characterLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                characterLabel.setVerticalAlignment(SwingConstants.CENTER);
+            characterLabel.setMinimumSize(new Dimension(60, 60));
+            characterLabel.setPreferredSize(new Dimension(60, 60));
+            characterLabel.setMaximumSize(new Dimension(60, 60));
 
-                characterLabel.setOpaque(true);
+            characterLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            characterLabel.setVerticalAlignment(SwingConstants.CENTER);
 
-                switch (tslwc.getStatus()) {
-                    case IN_PLACE: {
-                        characterLabel.setText(String.valueOf(tslwc.getCharacter()).toUpperCase(Locale.ROOT));
-                        characterLabel.setForeground(Color.WHITE);
-                        characterLabel.setBackground(Color.BLUE);
-                        break;
-                    }
-                    case HIDDEN: {
-                        characterLabel.setText(".");
-                        characterLabel.setForeground(Color.BLUE);
-                        characterLabel.setBackground(Color.WHITE);
-                        break;
-                    }
-                    default: {
-                        characterLabel.setText("?");
-                        characterLabel.setForeground(Color.WHITE);
-                        characterLabel.setBackground(Color.BLACK);
-                        break;
-                    }
+            characterLabel.setOpaque(true);
+
+            switch (tslwc.getStatus()) {
+                case IN_PLACE: {
+                    characterLabel.setText(String.valueOf(tslwc.getCharacter()).toUpperCase(Locale.ROOT));
+                    characterLabel.setForeground(Color.WHITE);
+                    characterLabel.setBackground(Color.BLUE);
+                    break;
                 }
-
-                this.add(characterLabel);
+                case HIDDEN: {
+                    characterLabel.setText(".");
+                    characterLabel.setForeground(Color.BLUE);
+                    characterLabel.setBackground(Color.WHITE);
+                    break;
+                }
+                default: {
+                    characterLabel.setText("?");
+                    characterLabel.setForeground(Color.WHITE);
+                    characterLabel.setBackground(Color.BLACK);
+                    break;
+                }
             }
-            this.rendered = true;
+
+            this.add(characterLabel);
         }
         return this;
     }

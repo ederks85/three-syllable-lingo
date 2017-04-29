@@ -26,26 +26,51 @@ public class ThreadSafeThreeSyllableLingoWord implements ThreeSyllableLingoWord 
 
         this.threeSyllableWord = threeSyllableWord;
         this.guesses = new LinkedBlockingDeque<>();
-
-        // Set initial guess status: the first character
-        this.guesses.push(String.valueOf(this.threeSyllableWord.getFirstCharacter()));
     }
 
     @Override
     public ThreeSyllableLingoWordCharacter[] getGuessStatus() {
+        String mostRecentGuess = this.guesses.peek();
+        if (mostRecentGuess == null) {
+            return getInitialGuessStatus();
+        } else {
+            return getGuessStatusAfterGuess();
+        }
+    }
+
+    private ThreeSyllableLingoWordCharacter[] getInitialGuessStatus() {
         final String completeThreeSyllableWordAsString = this.threeSyllableWord.getCompleteWord();
-        final String mostRecentGuess = this.guesses.peek();
 
         final ThreeSyllableLingoWordCharacter[] guessStatus = new ThreeSyllableLingoWordCharacter[completeThreeSyllableWordAsString.length()];
 
         for (int i=0; i < completeThreeSyllableWordAsString.length(); i++) {
             final ThreeSyllableLingoWordCharacterGuessStatus status;
-            if (mostRecentGuess.length() > i && mostRecentGuess.charAt(i) == completeThreeSyllableWordAsString.charAt(i)) {
+            if (i == 0 && completeThreeSyllableWordAsString.charAt(i) == completeThreeSyllableWordAsString.charAt(i)) {
                 status = ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE;
             } else {
                 status = ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN;
             }
             guessStatus[i] = new ImmutableThreeSyllableLingoWordCharacter(status, completeThreeSyllableWordAsString.charAt(i));
+        }
+
+        this.guesses.push(completeThreeSyllableWordAsString);
+
+        return guessStatus;
+    }
+
+    private ThreeSyllableLingoWordCharacter[] getGuessStatusAfterGuess() {
+        final String completeThreeSyllableWordAsString = this.threeSyllableWord.getCompleteWord();
+        final ThreeSyllableLingoWordCharacter[] guessStatus = new ThreeSyllableLingoWordCharacter[completeThreeSyllableWordAsString.length()];
+
+        final String mostRecentGuess = this.guesses.peek();
+        for (int i=0; i < completeThreeSyllableWordAsString.length(); i++) {
+            final ThreeSyllableLingoWordCharacterGuessStatus status;
+            if (mostRecentGuess.charAt(i) == completeThreeSyllableWordAsString.charAt(i)) {
+                status = ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE;
+            } else {
+                status = ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN;
+            }
+            guessStatus[i] = new ImmutableThreeSyllableLingoWordCharacter(status, mostRecentGuess.charAt(i));
         }
 
         return guessStatus;

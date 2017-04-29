@@ -1,24 +1,10 @@
 package games.tsl.swing.panels;
 
-import games.tsl.swing.actions.WindowCloseAction;
+import games.tsl.swing.actions.gui.WindowCloseAction;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import javax.swing.*;
+import java.awt.*;
 
-/**
- * Created by Edwin on 21-8-2016.
- */
 public class CommandPanel extends JPanel {
 
     private static final Font FONT = new Font("Verdana", Font.BOLD, 30);
@@ -27,6 +13,7 @@ public class CommandPanel extends JPanel {
     private final Component betweenGlue;
 
     private final JTextField inputField;
+    private final JButton inputButton;
     private final JButton quitButton;
 
     public CommandPanel() {
@@ -40,11 +27,22 @@ public class CommandPanel extends JPanel {
         this.inputField = createInputField();
         this.add(this.inputField, Box.CENTER_ALIGNMENT);
 
+        this.inputButton = createInputButton();
+        this.add(this.inputButton, Box.CENTER_ALIGNMENT);
+
         this.betweenGlue = Box.createHorizontalGlue();
         this.add(this.betweenGlue, Box.RIGHT_ALIGNMENT);
 
         this.quitButton = createQuitButton();
         this.add(this.quitButton, Box.RIGHT_ALIGNMENT);
+    }
+
+    public String getCurrentInput() {
+        return this.inputField.getText();
+    }
+
+    public void setInputButtonAction(final Action action) {
+        this.inputButton.setAction(action);
     }
 
     @Override
@@ -82,6 +80,17 @@ public class CommandPanel extends JPanel {
         textfield.setHorizontalAlignment(JTextField.CENTER);
         textfield.setLocation(5, 5);
         return textfield;
+    }
+
+    private JButton createInputButton() {
+        final Font font = new Font("Verdana", Font.BOLD, 30);
+
+        final JButton button = new JButton();
+        button.setFont(font);
+        button.setForeground(Color.BLUE);
+        button.setBackground(Color.WHITE);
+
+        return button;
     }
 
     private JButton createQuitButton() {

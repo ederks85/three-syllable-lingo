@@ -6,20 +6,17 @@ import games.tsl.swing.renderers.ThreeSyllableLingoListCellRenderer;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by Edwin on 21-8-2016.
- */
 public class LingoGamePanel extends JPanel {
 
     private final JList<ThreeSyllableLingoWordCharacter[]> threeSyllableLingoWordsList;
+    private final DefaultListModel<ThreeSyllableLingoWordCharacter[]> listModel;
 
-    public LingoGamePanel(final ThreeSyllableLingoWordCharacter[] initialValue) {
+    public LingoGamePanel() {
         this.setBackground(Color.LIGHT_GRAY);
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         this.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
-        final DefaultListModel<ThreeSyllableLingoWordCharacter[]> listModel = new DefaultListModel<>();
-        listModel.addElement(initialValue);
+        this.listModel = new DefaultListModel<>();
 
         this.threeSyllableLingoWordsList = new JList<>();
         this.threeSyllableLingoWordsList.setEnabled(false);
@@ -27,6 +24,10 @@ public class LingoGamePanel extends JPanel {
         this.threeSyllableLingoWordsList.setCellRenderer(new ThreeSyllableLingoListCellRenderer());
 
         this.add(this.threeSyllableLingoWordsList);
+    }
+
+    public void addGuessForThreeSyllableWord(final ThreeSyllableLingoWordCharacter[] guess) {
+        this.listModel.addElement(guess);
     }
 
     @Override

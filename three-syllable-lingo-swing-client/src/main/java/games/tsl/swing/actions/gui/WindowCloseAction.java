@@ -1,4 +1,4 @@
-package games.tsl.swing.actions;
+package games.tsl.swing.actions.gui;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -7,9 +7,6 @@ import javax.swing.SwingUtilities;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
-/**
- * Created by Edwin on 21-8-2016.
- */
 public class WindowCloseAction extends AbstractAction {
 
     public WindowCloseAction() {
