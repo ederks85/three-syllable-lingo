@@ -13,12 +13,24 @@ public class ImmutableThreeSyllableLingoWordCharacter implements ThreeSyllableLi
 
     private final ThreeSyllableLingoWordCharacterGuessStatus status;
     private final char character;
+    private final int syllableNumber;
 
-    public ImmutableThreeSyllableLingoWordCharacter(ThreeSyllableLingoWordCharacterGuessStatus status, char character) {
+    /**
+     * @param status The status of {@link #character} in the three-syllable lingo word
+     * @param character The character in question.
+     * @param syllableNumber The syllable number this character resided in the three-syllable word
+     *
+     * @throws NullPointerException when {@link #status} is null
+     */
+    ImmutableThreeSyllableLingoWordCharacter(
+            final ThreeSyllableLingoWordCharacterGuessStatus status,
+            final char character,
+            final int syllableNumber) {
         Validate.notNull(status);
 
         this.status = status;
         this.character = character;
+        this.syllableNumber = syllableNumber;
     }
 
     @Override
@@ -29,5 +41,10 @@ public class ImmutableThreeSyllableLingoWordCharacter implements ThreeSyllableLi
     @Override
     public char getCharacter() {
         return this.character;
+    }
+
+    @Override
+    public int getSyllableNumber() {
+        return this.syllableNumber;
     }
 }

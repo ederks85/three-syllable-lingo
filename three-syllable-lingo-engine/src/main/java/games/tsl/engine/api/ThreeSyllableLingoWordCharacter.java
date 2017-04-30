@@ -24,4 +24,10 @@ public interface ThreeSyllableLingoWordCharacter {
      * @return The {@link char}.
      */
     char getCharacter();
+
+    /**
+     * @return The syllable number of the three-syllable word this character resides: 1 for the first syllable,
+     * for the second and 3 for the third
+     */
+    int getSyllableNumber();
 }

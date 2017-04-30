@@ -59,13 +59,13 @@ public class ThreeSyllableLingoListCellRenderer extends JPanel implements ListCe
             switch (tslwc.getStatus()) {
                 case IN_PLACE: {
                     characterLabel.setText(String.valueOf(tslwc.getCharacter()).toUpperCase(Locale.ROOT));
-                    characterLabel.setForeground(Color.WHITE);
+                    characterLabel.setForeground(getColorForSyllableNumber(tslwc.getSyllableNumber()));
                     characterLabel.setBackground(Color.BLUE);
                     break;
                 }
                 case HIDDEN: {
                     characterLabel.setText(".");
-                    characterLabel.setForeground(Color.BLUE);
+                    characterLabel.setForeground(getColorForSyllableNumber(tslwc.getSyllableNumber()));
                     characterLabel.setBackground(Color.WHITE);
                     break;
                 }
@@ -80,5 +80,17 @@ public class ThreeSyllableLingoListCellRenderer extends JPanel implements ListCe
             this.add(characterLabel);
         }
         return this;
+    }
+
+    private Color getColorForSyllableNumber(final int syllableNumber) {
+        if (syllableNumber == 1) {
+            return Color.YELLOW;
+        } else if (syllableNumber == 2) {
+            return Color.GREEN;
+        } else if (syllableNumber == 3) {
+            return Color.RED;
+        } else {
+            throw new IllegalArgumentException("Cannot determine color for syllable number: " + syllableNumber);
+        }
     }
 }

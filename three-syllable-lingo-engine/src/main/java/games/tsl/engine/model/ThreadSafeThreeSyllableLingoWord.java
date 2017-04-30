@@ -19,12 +19,16 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class ThreadSafeThreeSyllableLingoWord implements ThreeSyllableLingoWord {
 
     private final ThreeSyllableWord threeSyllableWord;
+    private final int threeSyllableWordFirstSplitLocation;
+    private final int threeSyllableWordSecondSplitLocation;
     private final BlockingDeque<String> guesses;
 
     public ThreadSafeThreeSyllableLingoWord(final ThreeSyllableWord threeSyllableWord) {
         Validate.notNull(threeSyllableWord, "ThreeSyllableWord is null");
 
         this.threeSyllableWord = threeSyllableWord;
+        this.threeSyllableWordFirstSplitLocation = this.threeSyllableWord.getFirstSyllableSplitLocation();
+        this.threeSyllableWordSecondSplitLocation = this.threeSyllableWord.getSecondSyllableSplitLocation();
         this.guesses = new LinkedBlockingDeque<>();
     }
 
@@ -50,7 +54,7 @@ public class ThreadSafeThreeSyllableLingoWord implements ThreeSyllableLingoWord 
             } else {
                 status = ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN;
             }
-            guessStatus[i] = new ImmutableThreeSyllableLingoWordCharacter(status, completeThreeSyllableWordAsString.charAt(i));
+            guessStatus[i] = new ImmutableThreeSyllableLingoWordCharacter(status, completeThreeSyllableWordAsString.charAt(i), calculateSyllableNumber(i));
         }
 
         this.guesses.push(completeThreeSyllableWordAsString);
@@ -70,10 +74,22 @@ public class ThreadSafeThreeSyllableLingoWord implements ThreeSyllableLingoWord 
             } else {
                 status = ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN;
             }
-            guessStatus[i] = new ImmutableThreeSyllableLingoWordCharacter(status, mostRecentGuess.charAt(i));
+            guessStatus[i] = new ImmutableThreeSyllableLingoWordCharacter(status, mostRecentGuess.charAt(i), calculateSyllableNumber(i));
         }
 
         return guessStatus;
+    }
+
+    private int calculateSyllableNumber(final int characterNumber) {
+        if (characterNumber >= 0 && characterNumber < this.threeSyllableWordFirstSplitLocation) {
+            return 1;
+        } else if (characterNumber >= this.threeSyllableWordFirstSplitLocation && characterNumber < this.threeSyllableWordSecondSplitLocation) {
+            return 2;
+        } else if (characterNumber >= this.threeSyllableWordSecondSplitLocation && characterNumber < this.threeSyllableWord.getCompleteWord().length()) {
+            return 3;
+        } else {
+            throw new IllegalArgumentException("CharacterNumber " + characterNumber + " exceeds maximum value of " + this.threeSyllableWord.getCompleteWord().length());
+        }
     }
 
     @Override
