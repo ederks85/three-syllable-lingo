@@ -5,6 +5,7 @@ import games.tsl.engine.api.ThreeSyllableLingoWordCharacter;
 import games.tsl.engine.api.ThreeSyllableLingoWordCharacterGuessStatus;
 import games.tsl.engine.api.ThreeSyllableWordFactory;
 import games.tsl.engine.api.exception.ThreeSyllableLingoGameException;
+import games.tsl.engine.api.exception.ThreeSyllableLingoInvalidGameStateException;
 import games.tsl.engine.api.exception.ThreeSyllableLingoInvalidGuessException;
 import games.tsl.engine.model.CSVThreeSyllableWordFactory;
 import games.tsl.engine.model.ImmutableThreeSyllableWord;
@@ -37,7 +38,7 @@ public class ThreeSyllableLingoGameEngineTest {
     private CSVThreeSyllableWordFactory threeSyllableWordFactory;
 
     @Rule
-    private ExpectedException invalidGuessException = ExpectedException.none();
+    private ExpectedException expectedException = ExpectedException.none();
 
     private ThreeSyllableLingoGameEngine threeSyllableLingoGameEngine;
 
@@ -67,7 +68,18 @@ public class ThreeSyllableLingoGameEngineTest {
     }
 
     @Test
+    public void test_guess_current_three_syllable_lingo_without_game_started() throws ThreeSyllableLingoGameException {
+        expectedException.expectCause(isA(ThreeSyllableLingoInvalidGameStateException.class));
+
+        final ThreeSyllableLingoWordCharacter[] guessResult = this.threeSyllableLingoGameEngine.guess(VALID_GUESS_INPUT);
+
+        assertNotNull(guessResult);
+        assertEquals(VALID_GUESS_INPUT.length(), guessResult.length);
+    }
+
+    @Test
     public void test_guess_current_three_syllable_lingo_valid_input() throws ThreeSyllableLingoGameException {
+        this.threeSyllableLingoGameEngine.startNewGame();
         final ThreeSyllableLingoWordCharacter[] guessResult = this.threeSyllableLingoGameEngine.guess(VALID_GUESS_INPUT);
 
         assertNotNull(guessResult);
@@ -76,8 +88,9 @@ public class ThreeSyllableLingoGameEngineTest {
 
     @Test
     public void test_guess_current_three_syllable_lingo_invalid_input() throws ThreeSyllableLingoGameException {
-        invalidGuessException.expectCause(isA(ThreeSyllableLingoInvalidGuessException.class));
+        expectedException.expectCause(isA(ThreeSyllableLingoInvalidGuessException.class));
 
+        this.threeSyllableLingoGameEngine.startNewGame();
         this.threeSyllableLingoGameEngine.guess(INVALID_GUESS_INPUT);
     }
 }
