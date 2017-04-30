@@ -67,11 +67,15 @@ public class ThreadSafeThreeSyllableLingoWord implements ThreeSyllableLingoWord 
         final ThreeSyllableLingoWordCharacter[] guessStatus = new ThreeSyllableLingoWordCharacter[completeThreeSyllableWordAsString.length()];
 
         final String mostRecentGuess = this.guesses.peek();
+        String mostRecentGuessChar;
+        String completeThreeSyllableWordChar;
         for (int i=0; i < completeThreeSyllableWordAsString.length(); i++) {
             final ThreeSyllableLingoWordCharacterGuessStatus status;
-            if (mostRecentGuess.charAt(i) == completeThreeSyllableWordAsString.charAt(i)) {
+            mostRecentGuessChar = String.valueOf(mostRecentGuess.charAt(i));
+            completeThreeSyllableWordChar = String.valueOf(completeThreeSyllableWordAsString.charAt(i));
+            if (mostRecentGuessChar.equalsIgnoreCase(completeThreeSyllableWordChar)) {
                 status = ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE;
-            } else if (completeThreeSyllableWordAsString.contains(String.valueOf(mostRecentGuess.charAt(i)))) {
+            } else if (StringUtils.containsIgnoreCase(completeThreeSyllableWordAsString, mostRecentGuessChar)) {
                 status = ThreeSyllableLingoWordCharacterGuessStatus.MISPLACED;
             } else {
                 status = ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN;

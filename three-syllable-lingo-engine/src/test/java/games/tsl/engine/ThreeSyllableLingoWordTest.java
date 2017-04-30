@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class ThreeSyllableLingoWordTest {
 
     private final String GENERATED_THREE_SYLLABLE_WORD = "syllable";
-    private final String VALID_GUESS_INPUT = "sollatol";
+    private final String VALID_GUESS_INPUT = "sollAtol";
     private final String INVALID_GUESS_INPUT = "invalidsyllable";
 
     @Mock
@@ -81,7 +81,7 @@ public class ThreeSyllableLingoWordTest {
         assertEquals(VALID_GUESS_INPUT.charAt(3), mostRecentGuessStatus[3].getCharacter());
 
         assertEquals(ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE, mostRecentGuessStatus[4].getStatus());
-        assertEquals(GENERATED_THREE_SYLLABLE_WORD.charAt(4), mostRecentGuessStatus[4].getCharacter());
+        assertNotEquals(GENERATED_THREE_SYLLABLE_WORD.charAt(4), mostRecentGuessStatus[4].getCharacter());
         assertEquals(VALID_GUESS_INPUT.charAt(4), mostRecentGuessStatus[4].getCharacter());
 
         assertEquals(ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN, mostRecentGuessStatus[5].getStatus());
