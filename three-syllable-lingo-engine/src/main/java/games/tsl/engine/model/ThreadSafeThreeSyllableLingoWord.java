@@ -71,6 +71,8 @@ public class ThreadSafeThreeSyllableLingoWord implements ThreeSyllableLingoWord 
             final ThreeSyllableLingoWordCharacterGuessStatus status;
             if (mostRecentGuess.charAt(i) == completeThreeSyllableWordAsString.charAt(i)) {
                 status = ThreeSyllableLingoWordCharacterGuessStatus.IN_PLACE;
+            } else if (completeThreeSyllableWordAsString.contains(String.valueOf(mostRecentGuess.charAt(i)))) {
+                status = ThreeSyllableLingoWordCharacterGuessStatus.MISPLACED;
             } else {
                 status = ThreeSyllableLingoWordCharacterGuessStatus.HIDDEN;
             }

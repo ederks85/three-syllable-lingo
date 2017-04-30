@@ -6,5 +6,5 @@ package games.tsl.engine.api;
  * Created by Edwin on 23-8-2016.
  */
 public enum ThreeSyllableLingoWordCharacterGuessStatus {
-    HIDDEN, IN_PLACE;
+    HIDDEN, IN_PLACE, MISPLACED
 }

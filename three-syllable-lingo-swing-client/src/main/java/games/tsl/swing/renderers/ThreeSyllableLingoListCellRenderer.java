@@ -63,6 +63,12 @@ public class ThreeSyllableLingoListCellRenderer extends JPanel implements ListCe
                     characterLabel.setBackground(Color.BLUE);
                     break;
                 }
+                case MISPLACED: {
+                    characterLabel.setText(String.valueOf(tslwc.getCharacter()).toUpperCase(Locale.ROOT));
+                    characterLabel.setForeground(getColorForSyllableNumber(tslwc.getSyllableNumber()));
+                    characterLabel.setBackground(Color.ORANGE);
+                    break;
+                }
                 case HIDDEN: {
                     characterLabel.setText(".");
                     characterLabel.setForeground(getColorForSyllableNumber(tslwc.getSyllableNumber()));
