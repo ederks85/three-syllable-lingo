@@ -22,7 +22,7 @@ public class ImmutableThreeSyllableLingoWordCharacter implements ThreeSyllableLi
      *
      * @throws NullPointerException when {@link #status} is null
      */
-    ImmutableThreeSyllableLingoWordCharacter(
+    public ImmutableThreeSyllableLingoWordCharacter(
             final ThreeSyllableLingoWordCharacterGuessStatus status,
             final char character,
             final int syllableNumber) {

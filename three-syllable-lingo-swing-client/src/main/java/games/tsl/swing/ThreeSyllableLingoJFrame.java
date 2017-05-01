@@ -2,11 +2,10 @@ package games.tsl.swing;
 
 import games.tsl.engine.LocalThreeSyllableLingoGameEngine;
 import games.tsl.engine.api.ThreeSyllableLingoGameEngine;
-import games.tsl.engine.api.ThreeSyllableLingoWordCharacter;
 import games.tsl.engine.api.exception.ThreeSyllableLingoGameException;
 import games.tsl.swing.actions.DefaultGameComponentManager;
 import games.tsl.swing.actions.GameComponentManager;
-import games.tsl.swing.actions.input.AddGuessForThreeSyllableWordAction;
+import games.tsl.swing.actions.input.StartNewThreeSyllableWordGameAction;
 import games.tsl.swing.panels.BannerPanel;
 import games.tsl.swing.panels.CommandPanel;
 import games.tsl.swing.panels.LingoGamePanel;
@@ -35,7 +34,6 @@ public class ThreeSyllableLingoJFrame extends JFrame {
         this.bannerPanel = new BannerPanel();
         this.add(this.bannerPanel, BorderLayout.NORTH);
 
-        final ThreeSyllableLingoWordCharacter[] initialThreeSyllableWord = this.threeSyllableLingoGameEngine.startNewGame();
         this.lingoGamePanel = new LingoGamePanel();
         this.add(this.lingoGamePanel, BorderLayout.CENTER);
 
@@ -43,11 +41,10 @@ public class ThreeSyllableLingoJFrame extends JFrame {
         this.add(this.commandPanel, BorderLayout.SOUTH);
 
         // Setup the initial state of the game
-        this.lingoGamePanel.addGuessForThreeSyllableWord(initialThreeSyllableWord);
         this.gameComponentManager = new DefaultGameComponentManager(this.threeSyllableLingoGameEngine, this.commandPanel, this.lingoGamePanel);
 
-        final AddGuessForThreeSyllableWordAction addGuessForThreeSyllableWordAction = new AddGuessForThreeSyllableWordAction(this.gameComponentManager);
-        this.commandPanel.setInputButtonAction(addGuessForThreeSyllableWordAction);
+        final StartNewThreeSyllableWordGameAction startNewThreeSyllableWordGameAction = new StartNewThreeSyllableWordGameAction(this.gameComponentManager);
+        this.commandPanel.setInputButtonAction(startNewThreeSyllableWordGameAction);
 
         // Make the game UI visible
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);

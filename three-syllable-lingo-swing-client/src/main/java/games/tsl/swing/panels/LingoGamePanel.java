@@ -39,4 +39,8 @@ public class LingoGamePanel extends JPanel {
     public void addGuessForThreeSyllableWord(final ThreeSyllableLingoWordCharacter[] guess) {
         this.listModel.addElement(guess);
     }
+
+    public void reset() {
+        this.listModel.clear();
+    }
 }

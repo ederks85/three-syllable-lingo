@@ -12,7 +12,7 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
- * Thread-unsafe implementation of {@link ThreeSyllableLingoWord}.
+ * Thread-safe implementation of {@link ThreeSyllableLingoWord}.
  *
  * Created by Edwin on 21-8-2016.
  */
