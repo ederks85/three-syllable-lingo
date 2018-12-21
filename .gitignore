@@ -74,3 +74,6 @@ fabric.properties
 modules.xml
 .idea/misc.xml
 *.ipr
+
+# Jenv
+.java-version

@@ -5,4 +5,6 @@ module three.syllable.lingo.engine {
 
     requires transitive commons.lang3;
     requires transitive commons.csv;
+
+    opens games.tsl.engine;
 }

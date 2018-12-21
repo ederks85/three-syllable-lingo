@@ -3,7 +3,6 @@ package games.tsl.engine;
 import games.tsl.engine.api.ThreeSyllableLingoGameEngine;
 import games.tsl.engine.api.ThreeSyllableLingoWordCharacter;
 import games.tsl.engine.api.ThreeSyllableLingoWordCharacterGuessStatus;
-import games.tsl.engine.api.ThreeSyllableWordFactory;
 import games.tsl.engine.api.exception.ThreeSyllableLingoGameException;
 import games.tsl.engine.api.exception.ThreeSyllableLingoInvalidGameStateException;
 import games.tsl.engine.api.exception.ThreeSyllableLingoInvalidGuessException;
@@ -15,36 +14,30 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.core.Is.isA;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
 
-@PrepareForTest({
-        LocalThreeSyllableLingoGameEngine.class,
-        ThreeSyllableWordFactory.class})
-@RunWith(PowerMockRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ThreeSyllableLingoGameEngineTest {
 
     private final String GENERATED_THREE_SYLLABLE_WORD = "syllable";
     private final String VALID_GUESS_INPUT = "sollatom";
     private final String INVALID_GUESS_INPUT = "invalidsyllable";
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
     @Mock
     private CSVThreeSyllableWordFactory threeSyllableWordFactory;
-
-    @Rule
-    private ExpectedException expectedException = ExpectedException.none();
 
     private ThreeSyllableLingoGameEngine threeSyllableLingoGameEngine;
 
     @Before
     public void init() throws Exception {
-        whenNew(CSVThreeSyllableWordFactory.class).withNoArguments().thenReturn(threeSyllableWordFactory);
         when(threeSyllableWordFactory.createRandomThreeSyllableWord()).thenReturn(new ImmutableThreeSyllableWord(GENERATED_THREE_SYLLABLE_WORD, 3, 5));
 
         this.threeSyllableLingoGameEngine = new LocalThreeSyllableLingoGameEngine();
